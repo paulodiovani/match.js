@@ -7,7 +7,7 @@ Simple pattern matching for Javascript.
 ## Usage
 
 ```js
-const { _, def } = require('./match')
+const { _, def } = require('match.js')
 
 // define functions
 def('isFigureCard', [_, 'J'], (suit, value) => {
