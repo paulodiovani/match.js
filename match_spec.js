@@ -13,6 +13,60 @@ describe('Match.js', () => {
     it('returns a function', () => {
       expect(def('ignoreMe')).to.be.a('function')
     })
+
+    context('defining isFigureCard', () => {
+      let isFigureCard
+
+      before(() => {
+        def('isFigureCard', [_, 'J'], (suit, value) => {
+          return true
+        })
+
+        def('isFigureCard', [_, 'Q'], (suit, value) => {
+          return true
+        })
+
+        def('isFigureCard', [_, 'K'], (suit, value) => {
+          return true
+        })
+
+        isFigureCard = def('isFigureCard', [], (suit, value) => {
+          return false
+        })
+      })
+
+      it('matches king of spades', () => {
+        const kingOfSpaces = ['♠', 'K']
+        expect(isFigureCard(...kingOfSpaces)).to.be.true()
+      })
+
+      it('matches nine of clubs', () => {
+        const nineOfClubs = ['♣', '9']
+        expect(isFigureCard(...nineOfClubs)).to.be.false()
+      })
+
+      it('matches three of hearts', () => {
+        const threeOfHearts = ['❤', '3']
+        expect(isFigureCard(...threeOfHearts)).to.be.false()
+      })
+
+      it('matches queen of diamonds', () => {
+        const queenOfDiamonds = ['♦', 'Q']
+        expect(isFigureCard(...queenOfDiamonds)).to.be.true()
+      })
+
+      it('matches A of diamonds', () => {
+        expect(isFigureCard('♦', 'A')).to.be.false()
+      })
+
+      it('matches ten of clubs', () => {
+        expect(isFigureCard('♣', '10')).to.be.false()
+      })
+
+      it('matches knight of clubs', () => {
+        expect(isFigureCard('♣', 'J')).to.be.true()
+      })
+    })
   })
 
   describe('#draw', () => {
